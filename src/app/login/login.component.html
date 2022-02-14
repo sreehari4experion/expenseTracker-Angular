@@ -1,0 +1,132 @@
+<!-- navbar -->
+<div class="row">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand text-dark" href="#"
+        ><span class="display-6 text-primary">Expense </span>tracker</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarNav"
+      ></div>
+    </div>
+  </nav>
+</div>
+<!-- end navbar -->
+<div
+  class="bar"
+  style="
+    height: 1rem;
+    background: linear-gradient(
+      to right,
+      hsl(215, 91%, 69%),
+      rgb(60, 136, 243)
+    );
+    border-radius: 1rem;
+  "
+></div>
+<!-- login form  -->
+<div
+  class="container main"
+  id="loginform"
+  style="display: flex; justify-content: center; align-items: center"
+>
+  <div class="login-form" id="login-form">
+    <h1 class="display-3 text-center p-2 text-primary">Login</h1>
+    <div class="loginCard">
+      <!-- form  -->
+      <form [formGroup]="loginForm" (ngSubmit)="loginCredentials()">
+        <!-- user name control  -->
+        <div class="my-3 form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Username"
+            name="UserName"
+            formControlName="UserName"
+            class="form-control"
+            minlength="3"
+            required
+            [ngClass]="{
+              'is-invalid':
+                formControls.UserName.invalid && formControls.UserName.touched
+            }"
+          />
+        </div>
+        <div class="validation"></div>
+        <!-- username validations -->
+        <div *ngIf="isSubmitted && formControls.UserName.errors">
+          <div
+            *ngIf="formControls.UserName.errors"
+            style="color: red; text-align: left"
+          >
+            User Name is required !
+          </div>
+        </div>
+        <!-- uPASSWORD control  -->
+        <div class="my-3 form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter Password"
+            name="Password"
+            formControlName="Password"
+            class="form-control"
+            minlength="5"
+            required
+            autocomplete="off"
+            [ngClass]="{
+              'is-invalid':
+                formControls.Password.invalid && formControls.Password.touched
+            }"
+          />
+        </div>
+        <!-- password validations -->
+        <div *ngIf="isSubmitted && formControls.Password.errors">
+          <div
+            *ngIf="formControls.Password.errors"
+            style="color: red; text-align: left"
+          >
+            password is required !
+          </div>
+        </div>
+        <!-- button  -->
+        <!-- center a button  -->
+
+        <div class="my-3 text-center">
+          <button class="btn-primary btn">Login</button>
+        </div>
+        <div *ngIf="error" style="color: red; text-align: left">
+          {{ error }}
+        </div>
+      </form>
+      <!-- end form  -->
+    </div>
+    <div class="row buttons-login p-3">
+      <!-- <button class="btn btn-primary login" id="loginbtn">Login</button> -->
+      <p class="text-center text-dark">
+        Dont have an account ?
+        <a
+          class="text-primary"
+          style="color: white; text-decoration: none"
+          id="signupLast"
+          routerLink="/signup"
+          >Sign Up</a
+        >
+      </p>
+
+      <!-- <button class="btn btn-primary signup">Sign Up</button> -->
+    </div>
+  </div>
+</div>

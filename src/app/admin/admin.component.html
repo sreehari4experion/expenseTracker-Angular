@@ -1,0 +1,141 @@
+<!-- nav -->
+<div class="row">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand text-dark" href="#"
+        ><span class="display-6 text-primary">Expense </span>tracker</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active btn nav-btn" aria-current="page" href="#"
+              >Expenses</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active btn nav-btn" aria-current="page" href="#"
+              >Analysis</a
+            >
+          </li>
+          <li
+            class="nav-item dropdown active"
+            style="display: flex; margin: 0 1rem 0 1rem"
+          >
+            <img
+              class="image-fluid rounded-circle"
+              src=""
+              alt=""
+              style="height: 3rem"
+            />
+            <a
+              class="nav-link dropdown-toggle active"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Sreehari
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  click="onLogout()"
+                  style="
+                    background-color: #d11f5b;
+                    color: white;
+                    border-radius: 5px;
+                  "
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<!-- end nav  -->
+<div
+  class="bar"
+  style="
+    height: 1rem;
+    background: linear-gradient(
+      to right,
+      hsl(215, 91%, 69%),
+      rgb(60, 136, 243)
+    );
+    border-radius: 1rem;
+  "
+></div>
+
+<!-- contents -->
+<div class="main container my-2">
+  <div class="row justify-content-center">
+    <a class="btn btn-primary col-3" routerLink="/addexpense">Add User</a>
+    &nbsp;
+    <a class="btn btn-primary col-3" routerLink="/admin/items">Reports</a>
+    &nbsp;
+    <a class="btn btn-danger col-3" (click)="onLogout()">Logout</a>
+  </div>
+  <h3 class="text-center my-2 text-center display-6">All Users</h3>
+
+  <!-- search box  -->
+  <div class="searchbar form-control my-3 bg-white" style="border: 0px">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="search expenses "
+      [(ngModel)]="filter"
+    />
+    {{ filter }}
+  </div>
+
+  <!-- end search box  -->
+  <table class="my-2 table-striped table-dark table">
+    <thead>
+      <tr>
+        <td>user id</td>
+        <td>user Name</td>
+        <td>user Phone</td>
+        <td>user Email</td>
+        <td>user DateOfBirth</td>
+        <td>Action</td>
+      </tr>
+    </thead>
+    <tbody
+      *ngFor="
+        let item of userService.users
+          | filter: filter
+          | paginate: { itemsPerPage: 4, currentPage: page }
+      "
+    >
+      <tr>
+        <td>{{ item.UserId }}</td>
+        <td>{{ item.Name }}</td>
+        <td>{{ item.Phone }}</td>
+        <td>{{ item.Email }}</td>
+        <td>{{ item.DateOfBirth }}</td>
+        <td>
+          <a class="btn btn-primary">Edit</a>
+          &nbsp;
+          <a class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

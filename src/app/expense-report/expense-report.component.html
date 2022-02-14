@@ -1,0 +1,137 @@
+<!-- nav -->
+<div class="row">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand text-dark" href="#"
+        ><span class="display-6 text-primary">Expense </span>tracker</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active btn nav-btn" aria-current="page" href="#"
+              >Expenses</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active btn nav-btn" aria-current="page" href="#"
+              >Analysis</a
+            >
+          </li>
+          <li
+            class="nav-item dropdown active"
+            style="display: flex; margin: 0 1rem 0 1rem"
+          >
+            <img
+              class="image-fluid rounded-circle"
+              src=""
+              alt=""
+              style="height: 3rem"
+            />
+            <a
+              class="nav-link dropdown-toggle active"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Sreehari
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  click="onLogout()"
+                  style="
+                    background-color: #d11f5b;
+                    color: white;
+                    border-radius: 5px;
+                  "
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<!-- end nav  -->
+<div
+  class="bar"
+  style="
+    height: 1rem;
+    background: linear-gradient(
+      to right,
+      hsl(215, 91%, 69%),
+      rgb(60, 136, 243)
+    );
+    border-radius: 1rem;
+  "
+></div>
+<div class="main container m-3">
+  <div class="row">
+    <label for="date my-1"
+      >Choose date to find the maximum spend category and amount</label
+    >
+    <div class="row">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- user name control  -->
+        <div class="my-3 form-group">
+          <input
+            type="date"
+            class="form-control"
+            placeholder="Enter date"
+            name="Date"
+            formControlName="Date"
+            class="form-control"
+            minlength="3"
+            required
+          />
+        </div>
+        <div class="validation"></div>
+        <!-- username validations -->
+
+        <!-- button  -->
+        <!-- center a button  -->
+
+        <div class="my-3 text-center">
+          <button class="btn-primary btn">Get Category</button>
+        </div>
+        <div *ngIf="error" style="color: red; text-align: left">
+          {{ error }}
+        </div>
+      </form>
+      <!-- end form  -->
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        &nbsp;
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of expService.maxXategories | keyvalue">
+        <td>{{ item.key }}</td>
+        &nbsp;
+        <td>{{ item.value }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

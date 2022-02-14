@@ -1,0 +1,226 @@
+<!-- navbar -->
+<div class="row">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand text-dark" href="#"
+        ><span class="display-6 text-primary">Expense </span>tracker</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarNav"
+      ></div>
+    </div>
+  </nav>
+</div>
+<!-- end navbar -->
+<div
+  class="bar"
+  style="
+    height: 1rem;
+    background: linear-gradient(
+      to right,
+      hsl(215, 91%, 69%),
+      rgb(60, 136, 243)
+    );
+    border-radius: 1rem;
+  "
+></div>
+<!-- contents  -->
+<!-- add expense form  -->
+<div
+  class="container main"
+  id="addexpenseform"
+  style="display: flex; justify-content: center; align-items: center"
+>
+  <div class="login-form" id="login-form">
+    <h1 class="display-3 text-center p-2 text-primary">Add Expense</h1>
+    <div class="loginCard">
+      <!-- form  -->
+      <form
+        name="expenseForm"
+        #form="ngForm"
+        autocomplete="off"
+        (ngSubmit)="onSubmit(form)"
+      >
+        <!-- expense id  -->
+        <div class="form-group">
+          <input
+            type="hidden"
+            name="ExpenseId"
+            [(ngModel)]="expService.expenseFormData.ExpenseId"
+            class="form-control"
+          />
+        </div>
+        <!-- user id  -->
+        <div class="form-group">
+          <input
+            type="hidden"
+            name="userId"
+            [(ngModel)]="expService.expenseFormData.UserId"
+            class="form-control"
+          />
+        </div>
+        <!-- expense date  -->
+        <div class="form-group">
+          <label for="date">Select Date</label>
+          <input
+            type="date"
+            name="ExpenseDate"
+            [(ngModel)]="expService.expenseFormData.ExpenseDate"
+            class="form-control"
+            placeholder="Enter Date"
+            required
+            minlength="3"
+            #ExpenseDate="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                form.controls.ExpenseDate.invalid &&
+                form.controls.ExpenseDate.touched
+            }"
+          />
+          <div
+            *ngIf="
+              form.controls.ExpenseDate.invalid &&
+              form.controls.ExpenseDate.touched
+            "
+          >
+            <div *ngIf="form.controls.ExpenseDate.errors.required">
+              date is required
+            </div>
+            <div *ngIf="form.controls.ExpenseDate.errors.minlength">
+              date should be atleast 3 characters long
+            </div>
+          </div>
+        </div>
+        <!-- expense category  -->
+        <!-- select category  -->
+        <div class="form-group my-1">
+          <label for="category" class="text-white">Category</label>
+          <select
+            name="CategoryId"
+            [(ngModel)]="expService.expenseFormData.CategoryId"
+            class="form-control"
+            id="category"
+            required
+            #CategoryId="ngModel"
+          >
+            <option value="" disabled selected hidden>Select Category</option>
+            <option
+              *ngFor="let item of expService.categories"
+              value="{{ item.CategoryId }}"
+            >
+              {{ item.CategoryName }}
+            </option>
+          </select>
+        </div>
+        <!-- validations -->
+        <div class="form-group">
+          <div
+            *ngIf="CategoryId.invalid && CategoryId.touched"
+            class="text-danger"
+          >
+            <div *ngIf="CategoryId.errors.required">Food is required</div>
+          </div>
+        </div>
+        <!-- expense amount  -->
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input
+            type="number"
+            name="ExpenseAmount"
+            [(ngModel)]="expService.expenseFormData.ExpenseAmount"
+            class="form-control"
+            placeholder="Enter Amount"
+            required
+            minlength="1"
+            #ExpenseAmount="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                form.controls.ExpenseAmount.invalid &&
+                form.controls.ExpenseAmount.touched
+            }"
+          />
+          <div
+            *ngIf="
+              form.controls.ExpenseAmount.invalid &&
+              form.controls.ExpenseAmount.touched
+            "
+          >
+            <div *ngIf="form.controls.ExpenseAmount.errors.required">
+              amount is required
+            </div>
+            <div *ngIf="form.controls.ExpenseAmount.errors.minlength">
+              amount should be atleast 1 characters long
+            </div>
+          </div>
+        </div>
+        <!-- add individual items  -->
+        <div class="form-group">
+          <label for="item">Add Items</label>
+          <div class="input-group">
+            <form
+              name="itemForm"
+              #itemform="ngForm"
+              autocomplete="off"
+              (ngSubmit)="onSubmitItem(form)"
+            >
+              <input
+                type="text"
+                name="ItemName"
+                [(ngModel)]="expService.itemsFormData.ItemName"
+                class="form-control"
+                placeholder="Enter Item"
+                required
+                minlength="3"
+                #ItemName="ngModel"
+                [ngClass]="{
+                  'is-invalid':
+                    form.controls.ItemName.invalid &&
+                    form.controls.ItemName.touched
+                }"
+              />
+              <div
+                *ngIf="
+                  form.controls.ItemName.invalid &&
+                  form.controls.ItemName.touched
+                "
+              >
+                <div *ngIf="form.controls.ItemName.errors.required">
+                  item is required
+                </div>
+                <div *ngIf="form.controls.ItemName.errors.minlength">
+                  item should be atleast 3 characters long
+                </div>
+              </div>
+              <div class="input-group-append">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="form.invalid"
+                  click="addItem()"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </form>
+
+      <!-- end form  -->
+    </div>
+  </div>
+</div>
+<!-- end add expense form  -->
+<!-- end contents  -->
